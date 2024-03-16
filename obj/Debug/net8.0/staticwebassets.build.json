@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4kPzW04P3IkBRgYs2s1UBOCAxstndpkSRkHdmq6qC1A=",
+  "Source": "Seat_broker_backend",
+  "BasePath": "_content/Seat_broker_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Seat_broker_backend.props" />
+</Project>
