@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Seat_broker_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1f7c144f675fc246fd859b58ff463b8cff8c61a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Seat_broker_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Seat_broker_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

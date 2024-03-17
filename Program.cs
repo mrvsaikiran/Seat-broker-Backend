@@ -7,6 +7,9 @@ using Seat_broker_backend.Context;
 using Seat_broker_backend.ModelToDtoMappers;
 using System;
 using System.Text;
+using Hangfire;
+using Swashbuckle;
+using Seat_broker_backend.Repository.Implentations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(option =>{
@@ -31,14 +34,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqlserverConnStr"));
 });
 
-/*builder.Services.AddHangfire(configuration =>
+builder.Services.AddHangfire(configuration =>
 {
-    configuration.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")); // Replace with your Hangfire connection string
-    RecurringJob.Define<BookingCleanupJob>(job => job.Run())
-        .Daily()
-        .AtHour(0) // Run at midnight
-        .Queue("CleanupQueue"); // Optional queue for grouping jobs
-});*/
+    configuration.UseSqlServerStorage(builder.Configuration.GetConnectionString("sqlserverConnStr"));
+
+    RecurringJob.AddOrUpdate<JobRepository>("Cleanup Bookings", job => job.CleanupPreviousBookings(), cronExpression: Cron.Daily);
+});
 
 builder.Services.AddAuthentication(x =>
 {
