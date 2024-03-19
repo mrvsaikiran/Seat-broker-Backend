@@ -16,6 +16,7 @@ namespace Seat_broker_backend.Models
         public string? City {  get; set; }
 
         public int TheatreRating {  get; set; }
+        public int RatersCount { get; set; }
 
         [Required]
         public int UpperBalconyRowCount { get; set; }

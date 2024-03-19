@@ -15,6 +15,7 @@ namespace Seat_broker_backend.Models
         public string? Genre { get; set; }
 
         public int MovieRating { get; set; }
+        public int RatersCount { get; set; }
 
         [Required]
         public string? PosterUrl { get; set; }
