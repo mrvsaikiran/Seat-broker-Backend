@@ -6,6 +6,6 @@ namespace Seat_broker_backend.Repository.Interfaces
     {
         Task<Movies> getMovieById(int MovieId);
 
-        Task<IEnumerable<Movies>> GetMoviesInCity(string City);
+        Task<IEnumerable<Movies>> getMovieByCity(string locationGiven);
     }
 }

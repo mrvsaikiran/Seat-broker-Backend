@@ -10,5 +10,6 @@ namespace Seat_broker_backend.Repository.Interfaces
         Task<BookingsDto> getBookingInfo(int showId,DateTime ShowDate);
 
         Task<IEnumerable<Bookings>> getBookingsOfUser(int UserId);
+        void AddBookingDetails(Bookings bookingDetails);
     }
 }
