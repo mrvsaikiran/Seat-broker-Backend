@@ -24,11 +24,6 @@ namespace Seat_broker_backend.Repository.Implentations
             throw new NotImplementedException();
         }
 
-       public  Task<IEnumerable<Movies>> GetMoviesInCity(string City)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Movies>> getMovieByCity(string locationGiven)
         {
             IEnumerable<int> TheatreIdInCity= await _theatreRepository.getTheatreIdByCity(locationGiven);

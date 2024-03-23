@@ -8,6 +8,6 @@ namespace Seat_broker_backend.Repository.Interfaces
         Task<IEnumerable<int>> getMovieIdGivenTheatreIds(IEnumerable<int> TheatreIdList);
 
         Task<Shows> getShowById(int ShowId);
-        Task<IEnumerable<ShowsDto>> getShowForMovieOnDateInCity(int MovieId, DateTime date, string City,int currentPageIndex,int pageSize);
+        Task<IEnumerable<ShowsDto>> getShowForMovieOnDateInCity(MovieDetailsForShows details);
     }
 }

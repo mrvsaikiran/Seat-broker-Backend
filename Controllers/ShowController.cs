@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Seat_broker_backend.Models;
+using Seat_broker_backend.Models.Dto;
 using Seat_broker_backend.Repository.Implentations;
 
 namespace Seat_broker_backend.Controllers
 {
     [Route("[controller]")]
-    public class MovieController : Controller
+    public class ShowController : Controller
     {
-        private readonly ILogger<MovieController> _logger;
-        private readonly MovieRepository _movieRepository;
-
-        public MovieController(ILogger<MovieController> logger, MovieRepository movieRepository)
+        private readonly ILogger<ShowController> _logger;
+        private readonly ShowRepository _showRepository;
+        public ShowController(ILogger<ShowController> logger, ShowRepository showRepository)
         {
             _logger = logger;
-            _movieRepository = movieRepository;
+            _showRepository = showRepository;
         }
 
         public IActionResult Index()
@@ -33,10 +33,10 @@ namespace Seat_broker_backend.Controllers
             return View("Error!");
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Movies>> getMovieByCity(string location) 
+        [HttpPost]
+        public async Task<IEnumerable<ShowsDto>> getAllShows(MovieDetailsForShows details) 
         {
-            return await _movieRepository.getMovieByCity(location);
+            return await _showRepository.getShowForMovieOnDateInCity(details);
         }
     }
 }

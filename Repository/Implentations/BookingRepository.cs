@@ -28,7 +28,7 @@ namespace Seat_broker_backend.Repository.Implentations
             Shows showPriceInfo = await _showRepo.getShowById(showId);
             TheatreStructureDto theatreStructureInfo = await _theatreRepo.getTheatreStructureDetails(showId);
             IEnumerable<string> bookedSeats = await _context.Bookings
-                     .Where(b => b.ShowId == showId && b.BookedForDate == Showdate)
+                     .Where(b => b.BookedForDate == Showdate && b.ShowId == showId)
                      .Select(s=>s.SeatId).ToListAsync();
            
             return new BookingsDto
@@ -51,6 +51,11 @@ namespace Seat_broker_backend.Repository.Implentations
             return BookingList;
         }
 
+        public async void AddBookingDetails(Bookings bookingDetails)
+        {
+            await _context.Bookings.AddAsync(bookingDetails);
+            await _context.SaveChangesAsync();
+        }
         
     }
 }

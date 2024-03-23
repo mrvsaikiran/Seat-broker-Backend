@@ -29,16 +29,16 @@ namespace Seat_broker_backend.Repository.Implentations
             return MovieIdList;
         }
 
-        public async Task<IEnumerable<ShowsDto>> getShowForMovieOnDateInCity(int MovieId, DateTime date, string City,int CurrentIndex,int PageSize)
+        public async Task<IEnumerable<ShowsDto>> getShowForMovieOnDateInCity(MovieDetailsForShows details)
         {
-            IEnumerable<int> theatresList=await _theatreRepository.getTheatreIdByCity(City);
+            IEnumerable<int> theatresList=await _theatreRepository.getTheatreIdByCity(details.City);
 
             IEnumerable<ShowsDto> ShowList = await _db.Shows
                       .Where(s => theatresList.Contains(s.TheatreId) &&
-                                  s.MovieId == MovieId &&
-                                  s.ShowDateTime.Year == date.Year &&
-                                  s.ShowDateTime.Month == date.Month &&
-                                  s.ShowDateTime.Day == date.Day)
+                                  s.MovieId == details.MovieId &&
+                                  s.ShowDateTime.Year == details.Date.Year &&
+                                  s.ShowDateTime.Month == details.Date.Month &&
+                                  s.ShowDateTime.Day == details.Date.Day)
                       .Join(_db.Theatre,
                       sh => sh.TheatreId, th => th.TheatreId, 
                       (sh, th) => new ShowsDto{
@@ -51,8 +51,8 @@ namespace Seat_broker_backend.Repository.Implentations
                          Latitude = th.Latitude,
                          longitute = th.longitute
                       })
-                      .Skip(CurrentIndex)
-                      .Take(PageSize)
+                      .Skip(details.CurrentIndex)
+                      .Take(details.PageSize)
                       .ToListAsync();
 
             return ShowList;

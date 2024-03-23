@@ -10,6 +10,7 @@ using System;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Seat_broker_backend.Repository.Implentations;
 
 namespace Seat_broker_backend.Controllers
 {
@@ -17,10 +18,10 @@ namespace Seat_broker_backend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AppDbContext _userDataContext;
-       public UserController(AppDbContext appDbContext) {
+        private readonly UserRepostory _userRepository;
+       public UserController(UserRepostory userRepository) {
           
-            _userDataContext = appDbContext;
+            _userRepository = userRepository;
         }
 
         [HttpPost("authenticate")]
@@ -36,13 +37,13 @@ namespace Seat_broker_backend.Controllers
             if (userObj.Password == null) { return BadRequest(new { Message = "Password Field is Not Present " }); }
 
 
-            var user = await _userDataContext.Users.FirstOrDefaultAsync(x =>( (x.UserName == userObj.UserName ) || (x.Email == userObj.UserName) ));
+            var user = await _userRepository.GetUserByEmail(userObj.Email);
             if(user == null)
             {
                 return NotFound(new { Message = "User Not Found" });
 
             }
-            if (PasswordHasher.VerifyPassword(user.Password,userObj.Password)) {
+            if (PasswordHasher.VerifyPassword(user.Password, userObj.Password)) {
                 { return BadRequest(new { Message = "Password is incorrect" }); }
             }
 
@@ -64,7 +65,7 @@ namespace Seat_broker_backend.Controllers
 
             if (userObj.Password == null) { return BadRequest(new { Message = "Password Field is Not Present " }); }
 
-            var EmailAlreadyExists = await _userDataContext.Users.FirstOrDefaultAsync(x => x.Email == userObj.Email);
+            var EmailAlreadyExists = await _userRepository.GetUserByEmail(userObj.Email);
 
             if(EmailAlreadyExists != null)
             {
@@ -74,9 +75,7 @@ namespace Seat_broker_backend.Controllers
             userObj.UserType= "User";
             userObj.Token = "";
 
-            await _userDataContext.AddAsync(userObj);
-            await _userDataContext.SaveChangesAsync();
-
+            await _userRepository.AddUser(userObj);
             return Ok(new {Message ="User Registered Sucessfully !!!"});
         }
     
